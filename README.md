@@ -59,3 +59,15 @@ The output is a TSV file that contains three columns of information:
 
 # Simulated Data
 
+We also provide a program for generating simulated sequencing samples, which is based on modifications to the program in https://github.com/annalam/cfdna-wgs-manuscript-code.
+
+You can run the command `python src/run_simulate.py` to generate simulated data, which conforms to the MyClone input format.
+
+The program has one required argument and several optional arguments:
+
+- `-o`: A directory where the program will output the results.
+- `--num_patients`: Number of simulated patient samples (default: 100).
+- `--num_samples`: Number of sequencing samples per patient (default: 3).
+- `--depth`: Average sequencing depth (default: 2000).
+- `--mut_N`: Average mutation number of each subclone (It should be an integer multiple of 2.5, and the default value is 2.5).
+- `--clone_num`: Number of clones (default: 6).
