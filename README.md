@@ -4,7 +4,7 @@ MyClone is a probabilistic method that reconstructs the clonal composition of tu
 
 # Installation
 
-MyClone is a program written entirely in Python.
+MyClone is a program written entirely in Python. It needs Python 3.9 or later version.
 
 To run MyClone, you can directly deploy the project locally by using the command:
 
