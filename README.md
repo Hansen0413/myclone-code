@@ -12,10 +12,10 @@ To run MyClone, you can directly deploy the project locally by using the command
 git clone https://github.com/Hansen0413/myclone-code.git
 ```
 
-Next, switch the working directory to the main directory of the project (i.e., the directory where `requirments.txt` is located), and run the following command to install the dependencies: (Since the code uses functions that are not present in the latest library versions, it is recommended to create a new Python environment and install the libraries according to the versions specified in `requirements.txt`.)
+Next, switch the working directory to the main directory of the project (i.e., the directory where `requirements.txt` is located), and run the following command to install the dependencies: (Since the code uses functions that are not present in the latest library versions, it is recommended to create a new Python environment and install the libraries according to the versions specified in `requirements.txt`.)
 
 ```
-pip install -r requirments.txt
+pip install -r requirements.txt
 ```
 
 After the dependencies are installed, keep the working directory and follow the subsequent instructions to run MyClone.
