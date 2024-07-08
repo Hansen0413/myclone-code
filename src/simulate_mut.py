@@ -116,8 +116,8 @@ def mutate(pop, mut_ids):
 
 def wgs(num_samples, output_folder, depth, mut_N, clone_num, logratio_stdev=0.7, maf_threshold=0.1, mutant_read_threshold=8):
     # Generate a germline genome
-    d = readtsv("../data/hg38.chrom.sizes")
-    centromeres = readtsv("../data/hg38.centromere.bed")
+    d = readtsv("data/hg38.chrom.sizes")
+    centromeres = readtsv("data/hg38.centromere.bed")
     germline = []
     for c in range(1, 23):
         chr_len = int(d.loc[c-1, 'length'])
@@ -345,7 +345,7 @@ def wgs(num_samples, output_folder, depth, mut_N, clone_num, logratio_stdev=0.7,
         new_dfs[s].to_csv(f"{output_dir_name}/{samples[s]}_somatic.tsv", sep='\t', index=False)
 
     # # Write the ground truth CN state into a file (used for plotting)
-    # chromosome_data = readtsv('../data/hg38.chrom.sizes')
+    # chromosome_data = readtsv('data/hg38.chrom.sizes')
     # CHR_NAMES = chromosome_data.loc[:,'chr'].tolist()
     # CHR_SIZES = chromosome_data.loc[:,'length'].astype(int).tolist()
     # CHR_STARTS = [0] + [CHR_STARTS[i - 1] + CHR_SIZES[i - 1] for i in range(1, len(CHR_SIZES))]
