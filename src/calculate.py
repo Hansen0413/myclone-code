@@ -3,9 +3,7 @@ import scipy.special as sp
 from scipy.stats import entropy
 from scipy.spatial import distance
 import random
-# from decorator import decorator
 import time
-# from sklearn.cluster import KMeans
 
 def timed(func):
     def wrapper(*args, **kwargs):

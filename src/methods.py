@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-# from calculate import cal_expected_cn
 import os
 import math
 import json

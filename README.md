@@ -4,20 +4,22 @@ MyClone is a probabilistic method that reconstructs the clonal composition of tu
 
 # Installation
 
-FastClone needs Python 3.5 or later version. It needs logbook, python-fire,
-scikit-learn, and pandas. To install the package using Pip,
+MyClone is a program written entirely in Python.
+
+To run MyClone, you can directly deploy the project locally by using the command:
 
 ```
-git clone https://github.com/GuanLab/FastClone_GuanLab.git
-pip install FastClone_GuanLab/
+git clone https://github.com/Hansen0413/myclone-code.git
 ```
 
-(Please make sure you have the slash at the end, which forces pip to install from local directory, otherwise it will run into error)
+Next, switch the working directory to the main directory of the project (i.e., the directory where `requirments.txt` is located), and run the following command to install the dependencies:
 
-You also can directly pip install FastClone with the command below.
 ```
-pip install fastclone-guanlab
+pip install -r requirments.txt
 ```
+
+After the dependencies are installed, keep the working directory and follow the subsequent instructions to run MyClone.
+
 # Usage
 
 ## Input format
