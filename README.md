@@ -32,7 +32,9 @@ The input consists of several TSV files, representing multiple sequencing sample
 - total_cn: The average copy number at the gene site. For example, with a tumor purity of 70%, a subclonal CNA that alters the copy number from 2 to 3 at the affected sites occurs in 50% of the tumor cells. Then, the average copy number at this site is calculated as 3 * 50% * 70% + 2 * (1 - 50% * 70%) = 2.35.
 - VAF: The variant allele fraction of the mutation.
 
-Any other columns will be ignored. Note that when there are multiple sequencing samples, the set of mutations for each sample should be the same. An input example can be found in "example/input".
+Any other columns will be ignored. Note that when there are multiple sequencing samples, the set of mutations for each sample should be the same. An input example can be found in `example/input`.
+
+If the tumor purity for each sample is provided in the input, a corresponding tumor purity file exists in the same folder as each sample file. The naming convention follows `{sample_name}_purity.tsv` (e.g., if the sample file is `01.tsv`, the corresponding tumor purity file is `01_purity.tsv`). The file contains only a single floating-point number (between 0 and 1), representing the tumor purity of the sample. Examples can be found in `example/input`.
 
 ## Usage
 
@@ -40,6 +42,10 @@ The MyClone program requires two mandatory arguments:
 
 - `-i`: A space delimited set of TSV files formatted as specified in the input format section.
 - `-o`: A directory where the program will output the results.
+
+and one optional argument:
+
+- `--tumor_purity`: Infer using the tumor purity from the input if this argument is provided.
 
 Then the MyClone program can be run by executing the following command:
 ```

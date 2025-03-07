@@ -19,6 +19,20 @@ class Clone:
     def add_mut(self, mut_id):
         self.mut_ids.append(mut_id)
 
+def read_purity_values(tsvs):
+    purity_values = []
+    
+    for tsv in tsvs:
+        purity_file = os.path.splitext(tsv)[0] + "_purity.tsv"
+        try:
+            with open(purity_file, 'r') as f:
+                purity_value = float(f.readline().strip())
+                purity_values.append(purity_value)
+        except Exception as e:
+            raise ValueError(f"Error reading purity file '{purity_file}': {e}")
+    
+    return purity_values
+
 def r_assign_matrix(r):
     print("Running r_assign..")
 
@@ -635,21 +649,25 @@ def clus_cln_clones(clone_lis, threshold=0.03):
                 return clus_cln_clones(clone_lis, threshold=threshold)
     return clone_lis
 
-def run_myclone(tsvs, output_dir, cnv_threshold=0.05):
+def run_myclone(tsvs, output_dir, purity_lis=[], cnv_threshold=0.05):
     # Prepare
     create_dir(output_dir)
     sample_num = len(tsvs)
-
-    # Fisrt clustering
-    var_matrix, ref_matrix, id_lis = SNV_matrices(tsvs)
-    r, c = myclone_fit(var_matrix, ref_matrix, K=min(10, len(id_lis)), max_iterations=1000, min_iterations=100, threshold=0.02)
-    r_square, r_assign = r_assign_matrix(r)
-    clone_lis = get_clone_lis(r_assign, id_lis, tsvs)
-
-    if len(id_lis) > 100:
-        tumor_fractions = predict_tumor_fractions_cln(tsvs, clone_lis)
+    
+    if len(purity_lis) > 0:
+        assert len(purity_lis) == sample_num
+        tumor_fractions = purity_lis
     else:
-        tumor_fractions = predict_tumor_fractions(tsvs, clone_lis, cnv_threshold)
+        # Fisrt clustering
+        var_matrix, ref_matrix, id_lis = SNV_matrices(tsvs)
+        r, c = myclone_fit(var_matrix, ref_matrix, K=min(10, len(id_lis)), max_iterations=1000, min_iterations=100, threshold=0.02)
+        r_square, r_assign = r_assign_matrix(r)
+        clone_lis = get_clone_lis(r_assign, id_lis, tsvs)
+
+        if len(id_lis) > 100:
+            tumor_fractions = predict_tumor_fractions_cln(tsvs, clone_lis)
+        else:
+            tumor_fractions = predict_tumor_fractions(tsvs, clone_lis, cnv_threshold)
     print("Tumor fractions: ", tumor_fractions)
 
     update_tsvs(tsvs, tumor_fractions)
@@ -669,15 +687,22 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Process multiple tsv files and save the output to a directory.')
     parser.add_argument('-i', '--input', type=str, nargs='+', help='Input file paths.', required=True)
     parser.add_argument('-o', '--output', type=str, help='Output directory path.', required=True)
+    parser.add_argument('--tumor_purity', action='store_true', help='Use provided tumor purity data instead of automatic inference.')
 
     args = parser.parse_args()
     tsvs = args.input
     out_folder = args.output
+    use_tumor_purity = args.tumor_purity
+
+    if use_tumor_purity:
+        purity_lis = read_purity_values(tsvs)
+    else:
+        purity_lis = []
 
     max_retries = 10 
     for attempt in range(max_retries):
         try:
-            run_myclone(tsvs, out_folder)
+            run_myclone(tsvs, out_folder, purity_lis=purity_lis)
             break
         except Exception as e:
             if attempt < max_retries - 1:  
