@@ -6,6 +6,8 @@ MyClone is a probabilistic method that reconstructs the clonal composition of tu
 
 MyClone is a program written entirely in Python. It needs Python 3.9 or later version.
 
+An installation-free way to run MyClone is by using the [Docker image](https://hub.docker.com/r/hansen0413/myclone-code). 
+
 To run MyClone, you can directly deploy the project locally by using the command:
 
 ```
